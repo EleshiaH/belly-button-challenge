@@ -1,29 +1,34 @@
+function charts(d3Output) {
 //1. define the url
-const url = " https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json";
+    d3.json(" https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json");
 
 //get the data from the samples.json file
-let d3Output = d3.json(url).then((data) => {
+        let d3Output = d3.json(url).then((data) => {
 
 //2. create a horizontal bar chart with a dropdown menu to display the top 10 OTYs found
 
 //process the data to get the top 10
-let sortedsamples = data.sample_values[0].sort((a, b) => b.sample_values - a.sample_values);
-let slicedData = sortedsamples.slice(0, 10);
-let reversedData = slicedData.reverse();
+    let sortedsamples = data.sample_values[0].sort((a, b) => b.sample_values - a.sample_values);
+    let slicedData = sortedsamples.slice(0, 10);
+    let reversedData = slicedData.reverse();
+
+    let otu_ids = result.otu_ids;
+    let otu_labels = result.otu_labels;
+    let sample_values = result.sample_values;
 
 //Trace the data
-var trace1 = {
+    let trace1 = [{
     x: reversedData.map(object => object.sample_values),
     y: reversedData.map(object => 'OTU ${object.otu_ids}'),
     text: reversedData.map(object => object.otu_labels),
     name: "OTU",
     type: "bar",
     orientation: "h"
-};
+}];
 
-var traceData = [trace1];
+    var traceData = [trace1];
 
-var layout = {
+    var layout = {
     title: "Top 10 OTU Bar Graph",
     margin: {
       l: 100,
@@ -51,15 +56,16 @@ var trace2 = {
     }
   };
   
-  var data = [trace2];
+  var bubbledata = [trace2];
   
-  var layout = {
+  var bubblelayout = {
     title: 'Bubble Chart Hover Text',
     showlegend: false,
     height: 600,
     width: 600
   };
   
-  Plotly.newPlot('gague', data, layout);
+  Plotly.newPlot('bubble', bubbledata, bubblelayout);
+}
 
-  
+init();
